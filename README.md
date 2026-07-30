@@ -82,3 +82,10 @@ dotnet add tests/IntegrationTests reference src/Api
 Install VSCode extensions (might need to close VSCode, kill vscode processes and start again after install)
 * C#
 * C# Dev Kit
+
+## Run and add a dish
+```bash
+curl -X POST http://localhost:5056/api/dishes \
+    -H "Content-Type: application/json" \
+    -d '{"name":"Pizza","country":"Italy","recipe":"Prepare dough, add toppings, bake."}'
+```
