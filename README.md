@@ -35,3 +35,9 @@ dotnet new classlib -n Infrastructure -o src/Infrastructure
 dotnet new xunit -n UnitTests -o tests/UnitTests
 dotnet new xunit -n IntegrationTests -o tests/IntegrationTests
 ```
+
+## Add projects to solution file
+```bash
+dotnet sln add src/**/*.csproj
+dotnet sln add tests/**/*.csproj
+```
