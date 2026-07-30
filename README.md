@@ -19,8 +19,7 @@ chmod +x ./dotnet-install.sh
 
 4) Set env variables
 ```bash
-export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+printf '\nexport DOTNET_ROOT=$HOME/.dotnet\nexport PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools\n' >> ~/.bashrc
 ```
 
 
@@ -78,3 +77,8 @@ dotnet add tests/UnitTests reference src/Application
 dotnet add tests/UnitTests reference src/Domain
 dotnet add tests/IntegrationTests reference src/Api
 ```
+
+## Debugging
+Install VSCode extensions (might need to close VSCode, kill vscode processes and start again after install)
+* C#
+* C# Dev Kit
