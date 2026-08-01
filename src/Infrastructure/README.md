@@ -25,3 +25,8 @@ Run from the root of the repository, not from within this Infrastructure locatio
 ```bash
 dotnet ef migrations add InitialCreate --project src/Infrastructure --startup-project src/Api
 ```
+
+after migration run to update the database:
+```bash
+dotnet ef database update --project src/Infrastructure --startup-project src/Api
+```
