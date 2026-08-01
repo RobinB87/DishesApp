@@ -4,3 +4,14 @@ GET {{Api_HostAddress}}/api/dishes
 Accept: application/json
 
 ###
+POST {{Api_HostAddress}}/api/dishes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Spaghetti Bolognese",
+  "country": "Italy",
+  "recipe": "Cook pasta, prepare sauce, combine."
+}
+
+

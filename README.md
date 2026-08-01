@@ -83,9 +83,9 @@ Install VSCode extensions (might need to close VSCode, kill vscode processes and
 * C#
 * C# Dev Kit
 
-## Run and add a dish
+## Run
+First start Docker and compose up. Then the app can be started.
+
 ```bash
-curl -X POST http://localhost:5056/api/dishes \
-    -H "Content-Type: application/json" \
-    -d '{"name":"Pizza","country":"Italy","recipe":"Prepare dough, add toppings, bake."}'
+docker compose up -d
 ```

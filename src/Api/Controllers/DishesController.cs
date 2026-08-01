@@ -1,30 +1,24 @@
-﻿using Domain.Entities;
+﻿using Application.Dishes;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class DishesController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class DishesController : ControllerBase
+    private readonly IDishService _dishService;
+
+    public DishesController(IDishService dishService)
     {
-        IList<Dish> dishes = new List<Dish>
-        {
-            new Dish("Spaghetti Bolognese", "Italy", "Cook pasta, prepare sauce, combine."),
-            new Dish("Sushi", "Japan", "Prepare rice, slice fish, roll sushi."),
-            new Dish("Tacos", "Mexico", "Cook meat, prepare toppings, assemble tacos."),
-        };
+        _dishService = dishService;
+    }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(dishes);
-        }
-
-        [HttpPost]
-        public IActionResult Post(Dish dish)
-        {
-            dishes.Add(dish);
-            return Ok(dishes);
-        }
+    [HttpPost]
+    public async Task<IActionResult> Post(Dish dish)
+    {
+        var addedDish = await _dishService.AddAsync(dish);
+        return Ok(addedDish);
     }
 }
