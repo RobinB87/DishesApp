@@ -12,8 +12,9 @@ public class DishService : IDishService
         _dishRepository = dishRepository;
     }
 
-    public async Task<Dish> AddAsync(Dish dish)
-    {
-        return await _dishRepository.AddAsync(dish);
-    }
+    public async Task<Dish> AddAsync(Dish dish) => 
+        await _dishRepository.AddAsync(dish);
+
+    public Task<IEnumerable<Dish>> GetAllAsync() =>
+        _dishRepository.GetAllAsync();
 }

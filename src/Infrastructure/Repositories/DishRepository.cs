@@ -1,6 +1,7 @@
 using Application.Repositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -20,10 +21,8 @@ public class DishRepository : IDishRepository
         return dish;
     }
 
-    public Task<IEnumerable<Dish>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Dish>> GetAllAsync() =>
+        await _context.Dishes.ToListAsync();
 
     public Task<Dish> GetAsync(int id)
     {

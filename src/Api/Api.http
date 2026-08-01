@@ -1,9 +1,5 @@
 @Api_HostAddress = http://localhost:5056
 
-GET {{Api_HostAddress}}/api/dishes
-Accept: application/json
-
-###
 POST {{Api_HostAddress}}/api/dishes
 Content-Type: application/json
 Accept: application/json
@@ -14,4 +10,7 @@ Accept: application/json
   "recipe": "Cook pasta, prepare sauce, combine."
 }
 
+###
+GET {{Api_HostAddress}}/api/dishes
+Accept: application/json
 
