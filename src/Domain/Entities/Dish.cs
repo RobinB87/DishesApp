@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Entities
 {
     public class Dish
     {
-        public int DishId { get; private set; }
+        [Key]
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Country { get; private set; }
         public string Recipe { get; private set; }

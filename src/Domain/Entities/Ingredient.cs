@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Entities
 {
     public class Ingredient
     {
+        [Key]
         public int Id { get; private set; }
         public string Name { get; private set; }
         public double PricePerUnit { get; private set; }
