@@ -30,4 +30,13 @@ public class DishesController : ControllerBase
         var dishes = await _dishService.GetAllAsync();
         return Ok(ApiResult<IEnumerable<DishResponse>>.Ok(dishes.Select(d => d.ToResponse())));
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ApiResult<DishResponse>>> GetById(int id)
+    {
+        var dish = await _dishService.GetByIdAsync(id);
+        return dish is null
+            ? NotFound(ApiResult<DishResponse>.Fail($"Dish with id {id} was not found."))
+            : Ok(ApiResult<DishResponse>.Ok(dish.ToResponse()));
+    }
 }

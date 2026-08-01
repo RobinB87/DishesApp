@@ -14,3 +14,7 @@ Accept: application/json
 GET {{Api_HostAddress}}/api/dishes
 Accept: application/json
 
+###
+GET {{Api_HostAddress}}/api/dishes/5
+Accept: application/json
+

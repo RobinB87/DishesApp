@@ -24,10 +24,9 @@ public class DishRepository : IDishRepository
     public async Task<IEnumerable<Dish>> GetAllAsync() =>
         await _context.Dishes.ToListAsync();
 
-    public Task<Dish> GetAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Dish?> GetByIdAsync(int id) =>
+        await _context.Dishes
+            .FirstOrDefaultAsync(d => d.Id == id);
 
     public void Delete(Dish entity)
     {

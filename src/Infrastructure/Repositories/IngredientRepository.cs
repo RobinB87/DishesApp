@@ -23,7 +23,7 @@ public class IngredientRepository : IIngredientRepository
         throw new NotImplementedException();
     }
 
-    public Task<Ingredient> GetAsync(int id)
+    public Task<Ingredient?> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }

@@ -6,4 +6,5 @@ public interface IDishService
 {
     Task<Dish> AddAsync(Dish dish);
     Task<IEnumerable<Dish>> GetAllAsync();
+    Task<Dish?> GetByIdAsync(int id);
 }

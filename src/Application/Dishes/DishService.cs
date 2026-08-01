@@ -17,4 +17,7 @@ public class DishService : IDishService
 
     public Task<IEnumerable<Dish>> GetAllAsync() =>
         _dishRepository.GetAllAsync();
+
+    public Task<Dish?> GetByIdAsync(int id) =>
+        _dishRepository.GetByIdAsync(id);
 }
