@@ -5,9 +5,13 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Spaghetti Bolognese",
+  "name": "Tomato Bread",
   "country": "Italy",
-  "recipe": "Cook pasta, prepare sauce, combine."
+  "recipe": "Mix and bake",
+  "ingredients": [
+    { "ingredientName": "Tomato", "pricePerUnit": 0.5, "quantity": 2 },
+    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3 }
+  ]
 }
 
 ###
