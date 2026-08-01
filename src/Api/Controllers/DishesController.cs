@@ -18,16 +18,16 @@ public class DishesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<DishResponse>> Add(Dish dish)
+    public async Task<ActionResult<ApiResult<DishResponse>>> Add(Dish dish)
     {
         var addedDish = await _dishService.AddAsync(dish);
-        return Ok(addedDish.ToResponse());
-    }    
-    
+        return Ok(ApiResult<DishResponse>.Ok(addedDish.ToResponse()));
+    }
+
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DishResponse>>> GetAll()
+    public async Task<ActionResult<ApiResult<IEnumerable<DishResponse>>>> GetAll()
     {
         var dishes = await _dishService.GetAllAsync();
-        return Ok(dishes.Select(d => d.ToResponse()));
+        return Ok(ApiResult<IEnumerable<DishResponse>>.Ok(dishes.Select(d => d.ToResponse())));
     }
 }
