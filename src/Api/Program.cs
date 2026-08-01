@@ -1,22 +1,13 @@
-using Application.Dishes;
-using Application.Repositories;
-using Infrastructure.Persistence;
-using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Application;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-   options.UseNpgsql(builder.Configuration["ConnectionStrings:DishesDb"]); 
-});
-
-builder.Services.AddScoped<IDishRepository, DishRepository>();
-builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
-builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
