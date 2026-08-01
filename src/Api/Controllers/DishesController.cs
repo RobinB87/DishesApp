@@ -1,4 +1,6 @@
-﻿using Application.Dishes;
+﻿using Api.Contracts;
+using Api.Mapping;
+using Application.Dishes;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +18,9 @@ public class DishesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Dish dish)
+    public async Task<ActionResult<DishResponse>> Post(Dish dish)
     {
         var addedDish = await _dishService.AddAsync(dish);
-        return Ok(addedDish);
+        return Ok(addedDish.ToResponse());
     }
 }
