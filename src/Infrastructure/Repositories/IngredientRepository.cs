@@ -1,6 +1,7 @@
 using Application.Repositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -15,18 +16,16 @@ public class IngredientRepository : IIngredientRepository
 
     public async Task<Ingredient> AddAsync(Ingredient ingredient)
     {
-        throw new NotImplementedException();
+        await _context.Ingredients.AddAsync(ingredient);
+        await _context.SaveChangesAsync();
+        return ingredient;
     }
 
-    public Task<IEnumerable<Ingredient>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<Ingredient>> GetAllAsync() =>
+        await _context.Ingredients.ToListAsync();
 
-    public Task<Ingredient?> GetByIdAsync(int id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Ingredient?> GetByIdAsync(int id) =>
+        await _context.Ingredients.FindAsync(id);
 
     public void Delete(Ingredient entity)
     {
