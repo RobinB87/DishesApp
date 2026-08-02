@@ -93,6 +93,6 @@ public class IngredientRepositoryTests : IAsyncLifetime
         var name = "Tomato";
         await SeedIngredientAsync(name);
 
-        await Assert.ThrowsAsync<DbUpdateException>(() => SeedIngredientAsync(name));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => SeedIngredientAsync(name));
     }
 }
