@@ -38,12 +38,16 @@ public class IngredientRepositoryTests : IAsyncLifetime
         await _postgres.DisposeAsync();
     }
 
+    private async Task<Ingredient> SeedIngredientAsync(string name = "Tomato", double pricePerUnit = 0.5)
+    {
+        var ingredient = new Ingredient(name, pricePerUnit);
+        return await _repository.AddAsync(ingredient);
+    }
+
     [Fact]
     public async Task AddAsync_PersistsIngredient()
     {
-        var ingredient = new Ingredient("Tomato", 0.5);
-
-        var actual = await _repository.AddAsync(ingredient);
+        var actual = await SeedIngredientAsync();
 
         Assert.NotNull(actual);
         Assert.Equal(0.5, actual.PricePerUnit);
@@ -52,9 +56,8 @@ public class IngredientRepositoryTests : IAsyncLifetime
     [Fact]
     public async Task AddAsync_FetchesAllIngredients()
     {
-        var ingredient = new Ingredient("Tomato", 0.5);
+        await SeedIngredientAsync();
 
-        await _repository.AddAsync(ingredient);
         var actual = await _repository.GetAllAsync();
 
         Assert.NotNull(actual);
@@ -64,9 +67,8 @@ public class IngredientRepositoryTests : IAsyncLifetime
     [Fact]
     public async Task AddAsync_FetchesOneIngredient()
     {
-        var ingredient = new Ingredient("Tomato", 0.5);
+        var added = await SeedIngredientAsync();
 
-        var added = await _repository.AddAsync(ingredient);
         var actual = await _repository.GetByIdAsync(added.Id);
 
         Assert.NotNull(actual);
@@ -77,9 +79,8 @@ public class IngredientRepositoryTests : IAsyncLifetime
     public async Task AddAsync_FetchesOneIngredientByName()
     {
         var expected = "Tomato";
-        var ingredient = new Ingredient("Tomato", 0.5);
+        await SeedIngredientAsync(expected);
 
-        await _repository.AddAsync(ingredient);
         var actual = await _repository.GetByNameAsync(expected);
 
         Assert.NotNull(actual);
