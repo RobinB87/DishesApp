@@ -1,7 +1,6 @@
 ﻿using Api.Contracts;
 using Api.Mapping;
 using Application.Dishes;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -18,9 +17,9 @@ public class DishesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ApiResult<DishResponse>>> Add(Dish dish)
+    public async Task<ActionResult<ApiResult<DishResponse>>> Add(CreateDishRequest request)
     {
-        var addedDish = await _dishService.AddAsync(dish);
+        var addedDish = await _dishService.AddAsync(request);
         return Ok(ApiResult<DishResponse>.Ok(addedDish.ToResponse()));
     }
 
