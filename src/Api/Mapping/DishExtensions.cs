@@ -5,6 +5,17 @@ namespace Api.Mapping;
 
 public static class DishExtensions
 {
+    public static DishResponseBase ToBaseResponse(this Dish dish)
+    {
+        return new DishResponseBase
+        {
+            DishId = dish.Id,
+            Name = dish.Name,
+            Country = dish.Country,
+            Recipe = dish.Recipe
+        };
+    }
+
     public static DishResponse ToResponse(this Dish dish)
     {
         return new DishResponse

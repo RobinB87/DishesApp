@@ -24,10 +24,10 @@ public class DishesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResult<IEnumerable<DishResponse>>>> GetAll()
+    public async Task<ActionResult<ApiResult<IEnumerable<DishResponseBase>>>> GetAll()
     {
         var dishes = await _dishService.GetAllAsync();
-        return Ok(ApiResult<IEnumerable<DishResponse>>.Ok(dishes.Select(d => d.ToResponse())));
+        return Ok(ApiResult<IEnumerable<DishResponseBase>>.Ok(dishes.Select(d => d.ToBaseResponse())));
     }
 
     [HttpGet("{id}")]

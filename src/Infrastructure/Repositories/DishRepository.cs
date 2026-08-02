@@ -26,6 +26,8 @@ public class DishRepository : IDishRepository
 
     public async Task<Dish?> GetByIdAsync(int id) =>
         await _context.Dishes
+            .Include(d => d.DishIngredients)
+            .ThenInclude(di => di.Ingredient)
             .FirstOrDefaultAsync(d => d.Id == id);
 
     public void Delete(Dish entity)
