@@ -4,5 +4,6 @@ namespace Application.Repositories;
 
 public interface IIngredientRepository : IRepository<Ingredient>
 {
-    Task<Ingredient?> GetByNameAsync(string name);
+    Task<IEnumerable<Ingredient>> AddManyAsync(IEnumerable<Ingredient> ingredients);
+    Task<IEnumerable<Ingredient>> GetByNamesAsync(IEnumerable<string> names);
 }

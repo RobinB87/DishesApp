@@ -34,18 +34,25 @@ public class IngredientRepository : IIngredientRepository
         return ingredient;
     }
 
+    public async Task<IEnumerable<Ingredient>> AddManyAsync(IEnumerable<Ingredient> ingredients)
+    {
+        await _context.Ingredients.AddRangeAsync(ingredients);
+        await _context.SaveChangesAsync();
+        return ingredients;
+    }
+
     public async Task<IEnumerable<Ingredient>> GetAllAsync() =>
         await _context.Ingredients.ToListAsync();
 
     public async Task<Ingredient?> GetByIdAsync(int id) =>
         await _context.Ingredients.FindAsync(id);
 
-    public async Task<Ingredient?> GetByNameAsync(string name) =>
-        await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
-
     public void Delete(Ingredient entity)
     {
         // TODO: verify if used by any dish
         throw new NotImplementedException();
     }
+
+    public async Task<IEnumerable<Ingredient>> GetByNamesAsync(IEnumerable<string> names) =>
+        await _context.Ingredients.Where(i => names.Contains(i.Name)).ToListAsync();
 }
