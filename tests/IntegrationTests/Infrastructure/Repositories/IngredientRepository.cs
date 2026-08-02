@@ -86,4 +86,13 @@ public class IngredientRepositoryTests : IAsyncLifetime
         Assert.NotNull(actual);
         Assert.Equal(expected, actual.Name);
     }
+
+    [Fact]
+    public async Task AddAsync_ThrowsDbUpdateException_WhenNameAlreadyExists()
+    {
+        var name = "Tomato";
+        await SeedIngredientAsync(name);
+
+        await Assert.ThrowsAsync<DbUpdateException>(() => SeedIngredientAsync(name));
+    }
 }
