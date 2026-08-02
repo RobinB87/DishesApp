@@ -27,8 +27,12 @@ public class IngredientRepository : IIngredientRepository
     public async Task<Ingredient?> GetByIdAsync(int id) =>
         await _context.Ingredients.FindAsync(id);
 
+    public async Task<Ingredient?> GetByNameAsync(string name) =>
+        await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
+
     public void Delete(Ingredient entity)
     {
+        // TODO: verify if used by any dish
         throw new NotImplementedException();
     }
 }

@@ -41,4 +41,47 @@ public class IngredientRepositoryTests : IAsyncLifetime
         Assert.NotNull(result);
         Assert.Equal(0.5, result.PricePerUnit);
     }
+
+    [Fact]
+    public async Task AddAsync_FetchesAllIngredients()
+    {
+        await using var context = CreateContext();
+        var repository = new IngredientRepository(context);
+        var ingredient = new Ingredient("Tomato", 0.5);
+
+        await repository.AddAsync(ingredient);
+        var result = await repository.GetAllAsync();
+
+        Assert.NotNull(result);
+        Assert.Single(result);
+    }
+
+    [Fact]
+    public async Task AddAsync_FetchesOneIngredient()
+    {
+        await using var context = CreateContext();
+        var repository = new IngredientRepository(context);
+        var ingredient = new Ingredient("Tomato", 0.5);
+
+        var result = await repository.AddAsync(ingredient);
+        var response = await repository.GetByIdAsync(result.Id);
+
+        Assert.NotNull(response);
+        Assert.Equal(0.5, response.PricePerUnit);
+    }
+
+    [Fact]
+    public async Task AddAsync_FetchesOneIngredientByName()
+    {
+        await using var context = CreateContext();
+        var name = "Tomato";
+        var repository = new IngredientRepository(context);
+        var ingredient = new Ingredient("Tomato", 0.5);
+
+        await repository.AddAsync(ingredient);
+        var result = await repository.GetByNameAsync(name);
+
+        Assert.NotNull(result);
+        Assert.Equal(name, result.Name);
+    }
 }
