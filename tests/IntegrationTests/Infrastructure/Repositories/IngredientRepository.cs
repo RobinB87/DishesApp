@@ -43,10 +43,10 @@ public class IngredientRepositoryTests : IAsyncLifetime
     {
         var ingredient = new Ingredient("Tomato", 0.5);
 
-        var result = await _repository.AddAsync(ingredient);
+        var actual = await _repository.AddAsync(ingredient);
 
-        Assert.NotNull(result);
-        Assert.Equal(0.5, result.PricePerUnit);
+        Assert.NotNull(actual);
+        Assert.Equal(0.5, actual.PricePerUnit);
     }
 
     [Fact]
@@ -55,10 +55,10 @@ public class IngredientRepositoryTests : IAsyncLifetime
         var ingredient = new Ingredient("Tomato", 0.5);
 
         await _repository.AddAsync(ingredient);
-        var result = await _repository.GetAllAsync();
+        var actual = await _repository.GetAllAsync();
 
-        Assert.NotNull(result);
-        Assert.Single(result);
+        Assert.NotNull(actual);
+        Assert.Single(actual);
     }
 
     [Fact]
@@ -66,23 +66,23 @@ public class IngredientRepositoryTests : IAsyncLifetime
     {
         var ingredient = new Ingredient("Tomato", 0.5);
 
-        var result = await _repository.AddAsync(ingredient);
-        var response = await _repository.GetByIdAsync(result.Id);
+        var added = await _repository.AddAsync(ingredient);
+        var actual = await _repository.GetByIdAsync(added.Id);
 
-        Assert.NotNull(response);
-        Assert.Equal(0.5, response.PricePerUnit);
+        Assert.NotNull(actual);
+        Assert.Equal(0.5, actual.PricePerUnit);
     }
 
     [Fact]
     public async Task AddAsync_FetchesOneIngredientByName()
     {
-        var name = "Tomato";
+        var expected = "Tomato";
         var ingredient = new Ingredient("Tomato", 0.5);
 
         await _repository.AddAsync(ingredient);
-        var result = await _repository.GetByNameAsync(name);
+        var actual = await _repository.GetByNameAsync(expected);
 
-        Assert.NotNull(result);
-        Assert.Equal(name, result.Name);
+        Assert.NotNull(actual);
+        Assert.Equal(expected, actual.Name);
     }
 }
