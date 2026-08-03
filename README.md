@@ -89,3 +89,21 @@ First start Docker and compose up. Then the app can be started.
 ```bash
 docker compose up -d
 ```
+
+# Release
+
+## Build locally
+```bash
+docker build -t dishesapp .
+```
+
+## Run
+
+`EXPOSE 8080` only documents the port — it doesn't publish it, so map it explicitly. The connection string also isn't set in
+`src/Api/appsettings.json`, so pass one pointing at a database with the required migrations applied.
+
+```bash
+docker run -p 8080:8080 -e ConnectionStrings__DishesDb="Host=host.docker.internal;Port=5432;Database=dishes;Username=postgres;Password=postgres" dishesapp
+```
+
+Alternatively, push the image (e.g. via GitHub Actions) to AWS ECS and host it there (database is still required).
