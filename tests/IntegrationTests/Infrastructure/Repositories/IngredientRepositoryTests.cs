@@ -1,18 +1,10 @@
 using Domain.Entities;
-using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Testcontainers.PostgreSql;
 
 namespace Tests.IntegrationTests.Infrastructure.Repositories;
 
-public class IngredientRepositoryTests : IAsyncLifetime
+public class IngredientRepositoryTests : PostgresIntegrationTestBase
 {
-    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:18.4-alpine3.24")
-          .WithDatabase("dishes")
-          .Build();
-
-    private AppDbContext _context = null!;
     private IngredientRepository _repository = null!;
     private readonly IEnumerable<Ingredient> _seededIngredients =
     [
@@ -21,28 +13,11 @@ public class IngredientRepositoryTests : IAsyncLifetime
         new Ingredient("Garlic", 0.2)
     ];
 
-    private AppDbContext CreateContext()
+    public override async Task InitializeAsync()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_postgres.GetConnectionString())
-            .Options;
-        return new AppDbContext(options);
-    }
+        await base.InitializeAsync();
 
-    public async Task InitializeAsync()
-    {
-        await _postgres.StartAsync();
-
-        _context = CreateContext();
-        await _context.Database.EnsureCreatedAsync();
-
-        _repository = new IngredientRepository(_context);
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _context.DisposeAsync();
-        await _postgres.DisposeAsync();
+        _repository = new IngredientRepository(Context);
     }
 
     private async Task<Ingredient> SeedIngredientAsync(string name = "Tomato", double pricePerUnit = 0.5)

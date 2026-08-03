@@ -1,20 +1,12 @@
 using Api.Contracts;
 using Application.Dishes;
 using Domain.Entities;
-using Infrastructure.Persistence;
 using Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Testcontainers.PostgreSql;
 
 namespace Tests.IntegrationTests.Application;
 
-public class DishServiceTests : IAsyncLifetime
+public class DishServiceTests : PostgresIntegrationTestBase
 {
-    private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:18.4-alpine3.24")
-          .WithDatabase("dishes")
-          .Build();
-
-    private AppDbContext _context = null!;
     private DishService _dishService = null!;
     private IngredientRepository _ingredientRepository = null!;
     private CreateDishRequest _createDishRequest = new CreateDishRequest
@@ -29,30 +21,13 @@ public class DishServiceTests : IAsyncLifetime
         }
     };
 
-    private AppDbContext CreateContext()
+    public override async Task InitializeAsync()
     {
-        var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseNpgsql(_postgres.GetConnectionString())
-            .Options;
-        return new AppDbContext(options);
-    }
+        await base.InitializeAsync();
 
-    public async Task InitializeAsync()
-    {
-        await _postgres.StartAsync();
-
-        _context = CreateContext();
-        await _context.Database.EnsureCreatedAsync();
-
-        var _dishRepository = new DishRepository(_context);
-        _ingredientRepository = new IngredientRepository(_context);
+        var _dishRepository = new DishRepository(Context);
+        _ingredientRepository = new IngredientRepository(Context);
         _dishService = new DishService(_dishRepository, _ingredientRepository);
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _context.DisposeAsync();
-        await _postgres.DisposeAsync();
     }
 
     [Fact]
