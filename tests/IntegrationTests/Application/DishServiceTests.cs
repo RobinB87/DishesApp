@@ -62,6 +62,7 @@ public class DishServiceTests : PostgresIntegrationTestBase
         var second = await _dishService.AddAsync(_createDishRequest);
 
         Assert.Equal(first.Id, second.Id);
+        Assert.Equal(_createDishRequest.Ingredients.Count, second.DishIngredients.Count);
         var allDishes = await _dishRepository.GetAllAsync();
         Assert.Single(allDishes);
     }

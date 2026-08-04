@@ -28,7 +28,10 @@ public class DishRepository : IDishRepository
         await _context.Dishes.ToListAsync();
 
     public async Task<Dish?> GetByGuidAsync(Guid guid) =>
-        await _context.Dishes.FirstOrDefaultAsync(d => d.Guid == guid);
+        await _context.Dishes
+            .Include(d => d.DishIngredients)
+            .ThenInclude(di => di.Ingredient)
+            .FirstOrDefaultAsync(d => d.Guid == guid);
 
     public async Task<Dish?> GetByIdAsync(int id) =>
         await _context.Dishes
