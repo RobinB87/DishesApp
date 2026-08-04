@@ -7,6 +7,7 @@ public class CreateDishIngredientRequest
     public required string IngredientName { get; set; }
     public double PricePerUnit { get; set; }
     public double Quantity { get; set; }
+    public Guid Guid { get; set; } = Guid.NewGuid();
 }
 
 public class CreateDishIngredientRequestValidator : AbstractValidator<CreateDishIngredientRequest>

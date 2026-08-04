@@ -8,6 +8,7 @@ public class CreateDishRequest
     public required string Name { get; set; }
     public required string Country { get; set; }
     public required string Recipe { get; set; }
+    public Guid Guid { get; set; } = Guid.NewGuid();
     public List<CreateDishIngredientRequest> Ingredients { get; set; } = [];
 }
 

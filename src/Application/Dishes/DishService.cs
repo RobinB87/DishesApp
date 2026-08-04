@@ -25,12 +25,12 @@ public class DishService : IDishService
         foreach (var ingredientRequest in request.Ingredients)
         {
             if (!existingNamesHash.Contains(ingredientRequest.IngredientName))
-                newIngredients.Add(new Ingredient(ingredientRequest.IngredientName, ingredientRequest.PricePerUnit));
+                newIngredients.Add(new Ingredient(ingredientRequest.IngredientName, ingredientRequest.PricePerUnit, ingredientRequest.Guid));
         }
 
         await _ingredientRepository.AddManyAsync(newIngredients);
 
-        var dish = new Dish(request.Name, request.Country, request.Recipe);
+        var dish = new Dish(request.Name, request.Country, request.Recipe, request.Guid);
         var ingredientsByName = existingIngredients.Concat(newIngredients).ToDictionary(i => i.Name);
         foreach (var ingredientRequest in request.Ingredients)
         {
