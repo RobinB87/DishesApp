@@ -23,7 +23,7 @@ public class DishesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ApiResult<DishResponse>>> Add(CreateDishRequest request)
     {
-        var validationResult = _createDishRequestValidator.Validate(request);
+        var validationResult = await _createDishRequestValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.ToDictionary();
