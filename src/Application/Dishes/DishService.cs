@@ -17,6 +17,10 @@ public class DishService : IDishService
 
     public async Task<Dish> AddAsync(CreateDishRequest request)
     {
+        var existingDish = await _dishRepository.GetByGuidAsync(request.Guid);
+        if (existingDish != null) 
+            return existingDish;
+
         var newIngredientNames = request.Ingredients.Select(i => i.IngredientName).ToList();
         var existingIngredients = await _ingredientRepository.GetByNamesAsync(newIngredientNames);
         

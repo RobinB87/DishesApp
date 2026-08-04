@@ -10,7 +10,23 @@ Accept: application/json
   "recipe": "Mix and bake",
   "ingredients": [
     { "ingredientName": "Tomato", "pricePerUnit": 0.5, "quantity": 2 },
-    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3 }
+    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3 },
+  ]
+}
+
+###
+POST {{Api_HostAddress}}/api/dishes
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Tomato Bread with Paprika",
+  "country": "Italy",
+  "recipe": "Mix and bake",
+  "guid": "a24417b5-1ab1-4322-8ac9-b4bc8b5940b0",
+  "ingredients": [
+    { "ingredientName": "Tomato", "pricePerUnit": 0.5, "quantity": 2, "guid": "bc172a49-6313-4cbe-8bed-6a51333c7601" },
+    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3, "guid": "2feac399-21b0-4d40-93c9-c3a60ff5c70c" }
   ]
 }
 
