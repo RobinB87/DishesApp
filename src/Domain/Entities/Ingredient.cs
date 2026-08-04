@@ -6,12 +6,12 @@ namespace Domain.Entities
     {
         [Key]
         public int Id { get; private set; }
-        public Guid? Guid { get; private set; }
+        public Guid Guid { get; private set; }
         public string Name { get; private set; }
         public double PricePerUnit { get; private set; }
         public virtual ICollection<DishIngredient> DishIngredients { get; } = new List<DishIngredient>();
 
-        public Ingredient(string name, double pricePerUnit, Guid? guid = null)
+        public Ingredient(string name, double pricePerUnit, Guid guid)
         {
             Guid = guid;
             Name = name;

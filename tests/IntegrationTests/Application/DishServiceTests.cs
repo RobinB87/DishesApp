@@ -46,7 +46,7 @@ public class DishServiceTests : PostgresIntegrationTestBase
     [Fact]
     public async Task AddAsync_ReusesExistingIngredient()
     {
-        await _ingredientRepository.AddAsync(new Ingredient("Tomato", 0.5));
+        await _ingredientRepository.AddAsync(new Ingredient("Tomato", 0.5, Guid.NewGuid()));
 
         var actual = await _dishService.AddAsync(_createDishRequest);
 
@@ -93,6 +93,11 @@ public class DishServiceTests : PostgresIntegrationTestBase
     {
         await _dishService.AddAsync(_createDishRequest);
 
+        // Guid is now a real EF alternate key, so the context would otherwise catch the
+        // duplicate in-memory (InvalidOperationException). Clearing the tracker forgets the
+        // already-tracked dish without touching the DB, so the insert reaches Postgres and
+        // hits the same unique constraint two independent requests' contexts would.
+        Context.ChangeTracker.Clear();
         var duplicateDish = new Dish(_createDishRequest.Name, _createDishRequest.Country, _createDishRequest.Recipe, _createDishRequest.Guid);
 
         await Assert.ThrowsAsync<DbUpdateException>(() => _dishRepository.AddAsync(duplicateDish));

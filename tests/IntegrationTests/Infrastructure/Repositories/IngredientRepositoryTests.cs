@@ -9,9 +9,9 @@ public class IngredientRepositoryTests : PostgresIntegrationTestBase
     private IngredientRepository _repository = null!;
     private readonly IEnumerable<Ingredient> _seededIngredients =
     [
-        new Ingredient("Tomato", 0.5),
-        new Ingredient("Onion", 0.3),
-        new Ingredient("Garlic", 0.2)
+        new Ingredient("Tomato", 0.5, Guid.NewGuid()),
+        new Ingredient("Onion", 0.3, Guid.NewGuid()),
+        new Ingredient("Garlic", 0.2, Guid.NewGuid())
     ];
 
     public override async Task InitializeAsync()
@@ -23,7 +23,7 @@ public class IngredientRepositoryTests : PostgresIntegrationTestBase
 
     private async Task<Ingredient> SeedIngredientAsync(string name = "Tomato", double pricePerUnit = 0.5)
     {
-        var ingredient = new Ingredient(name, pricePerUnit);
+        var ingredient = new Ingredient(name, pricePerUnit, Guid.NewGuid());
         return await _repository.AddAsync(ingredient);
     }
 

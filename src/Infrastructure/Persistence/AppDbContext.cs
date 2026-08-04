@@ -17,9 +17,15 @@ public class AppDbContext : DbContext
             .HasIndex(d => d.Name)
             .IsUnique();
 
+        modelBuilder.Entity<Dish>()
+            .HasAlternateKey(d => d.Guid);
+
         modelBuilder.Entity<Ingredient>()
             .HasIndex(i => i.Name)
             .IsUnique();
+
+        modelBuilder.Entity<Ingredient>()
+            .HasAlternateKey(i => i.Guid);
 
         modelBuilder.Entity<DishIngredient>()
             .HasKey(di => new { di.DishId, di.IngredientId });

@@ -16,7 +16,7 @@ public class DishRepositoryTests : PostgresIntegrationTestBase
 
     private async Task<Dish> SeedDishAsync(string name = "Pizza", string country = "Italy", string recipe = "Bake it")
     {
-        var dish = new Dish(name, country, recipe);
+        var dish = new Dish(name, country, recipe, Guid.NewGuid());
         return await _repository.AddAsync(dish);
     }
 
