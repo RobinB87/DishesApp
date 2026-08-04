@@ -10,7 +10,7 @@ Accept: application/json
   "recipe": "Mix and bake",
   "ingredients": [
     { "ingredientName": "Tomato", "pricePerUnit": 0.5, "quantity": 2 },
-    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3 },
+    { "ingredientName": "Flour", "pricePerUnit": 1.2, "quantity": 3 }
   ]
 }
 
