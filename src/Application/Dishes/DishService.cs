@@ -17,6 +17,11 @@ public class DishService : IDishService
 
     public async Task<Dish> AddAsync(CreateDishRequest request)
     {
+        var validator = new CreateDishRequestValidator();
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+            throw new ArgumentException(string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage)));
+
         var newIngredientNames = request.Ingredients.Select(i => i.IngredientName).ToList();
         var existingIngredients = await _ingredientRepository.GetByNamesAsync(newIngredientNames);
         
