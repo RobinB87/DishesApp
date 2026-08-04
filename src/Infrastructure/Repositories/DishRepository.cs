@@ -21,6 +21,9 @@ public class DishRepository : IDishRepository
         return dish;
     }
 
+    public async Task<bool> Exists(string name) =>
+        await _context.Dishes.AnyAsync(d => d.Name == name);
+
     public async Task<IEnumerable<Dish>> GetAllAsync() =>
         await _context.Dishes.ToListAsync();
 
