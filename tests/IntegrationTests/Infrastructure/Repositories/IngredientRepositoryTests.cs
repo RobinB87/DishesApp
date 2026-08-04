@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tests.IntegrationTests.Infrastructure.Repositories;
 
@@ -89,6 +90,6 @@ public class IngredientRepositoryTests : PostgresIntegrationTestBase
         var name = "Tomato";
         await SeedIngredientAsync(name);
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => SeedIngredientAsync(name));
+        await Assert.ThrowsAsync<DbUpdateException>(() => SeedIngredientAsync(name));
     }
 }
