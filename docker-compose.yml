@@ -12,5 +12,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
 
+  seq:
+    image: datalust/seq:2026.1.17083
+    container_name: seq
+    restart: unless-stopped
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=seqpass
+    volumes:
+      - seq_data:/data
+
 volumes:
   postgres_data:
+  seq_data:
