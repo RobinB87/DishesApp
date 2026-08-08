@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Api.Contracts;
 using Api.Exceptions;
 using FluentValidation;
+using Serilog;
 
 public static class DependencyInjection
 {
@@ -23,4 +24,12 @@ public static class DependencyInjection
 
         return services;
     }
+
+    public static IServiceCollection AddApiLogging(this IServiceCollection services,
+        IConfiguration configuration) =>
+        services.AddSerilog((_, config) => config
+            .ReadFrom.Configuration(configuration)
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.Seq(configuration["Seq:Url"] ?? "http://localhost:5341"));
 }

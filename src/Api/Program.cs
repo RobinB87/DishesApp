@@ -1,14 +1,9 @@
 using Application;
 using Infrastructure;
-using Serilog;
-
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Console()
-    .WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApiLogging(builder.Configuration);
 
 builder.Services.AddApi();
 builder.Services.AddApplication();
