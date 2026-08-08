@@ -1,20 +1,20 @@
-﻿using Api.Contracts;
+using Api.Contracts;
+using Api.Contracts.V2;
 using Api.Mapping;
 using Application.Dishes;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace Api.Controllers.V2;
 
-[Route("api/[controller]")]
+[Route("api/v2/[controller]")]
 [ApiController]
-[Obsolete("Deprecated. Use /api/v2/Dishes instead.")]
 public class DishesController : ControllerBase
 {
     private readonly IDishService _dishService;
     private readonly IValidator<CreateDishRequest> _createDishRequestValidator;
 
-    public DishesController(IDishService dishService, 
+    public DishesController(IDishService dishService,
         IValidator<CreateDishRequest> createDishRequestValidator)
     {
         _dishService = dishService;
@@ -22,13 +22,13 @@ public class DishesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ApiResult<DishResponse>>> Add(CreateDishRequest request)
+    public async Task<ActionResult<ApiResult<DishResponseV2>>> Add(CreateDishRequest request)
     {
         var validationResult = await _createDishRequestValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             var errors = validationResult.ToDictionary();
-            return BadRequest(ApiResult<DishResponse>.Fail(new ProblemDetails
+            return BadRequest(ApiResult<DishResponseV2>.Fail(new ProblemDetails
             {
                 Title = "Validation failed",
                 Detail = "One or more validation errors occurred.",
@@ -37,22 +37,22 @@ public class DishesController : ControllerBase
         }
 
         var addedDish = await _dishService.AddAsync(request);
-        return Ok(ApiResult<DishResponse>.Ok(addedDish.ToResponse()));
+        return Ok(ApiResult<DishResponseV2>.Ok(addedDish.ToResponseV2()));
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResult<IEnumerable<DishResponseBase>>>> GetAll()
+    public async Task<ActionResult<ApiResult<IEnumerable<DishResponseBaseV2>>>> GetAll()
     {
         var dishes = await _dishService.GetAllAsync();
-        return Ok(ApiResult<IEnumerable<DishResponseBase>>.Ok(dishes.Select(d => d.ToBaseResponse())));
+        return Ok(ApiResult<IEnumerable<DishResponseBaseV2>>.Ok(dishes.Select(d => d.ToBaseResponseV2())));
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ApiResult<DishResponse>>> GetById(int id)
+    [HttpGet("{guid}")]
+    public async Task<ActionResult<ApiResult<DishResponseV2>>> GetByGuid(Guid guid)
     {
-        var dish = await _dishService.GetByIdAsync(id);
+        var dish = await _dishService.GetByGuidAsync(guid);
         return dish is null
-            ? NotFound(ApiResult<DishResponse>.Fail(new ProblemDetails { Title = $"Dish with id {id} not found" }))
-            : Ok(ApiResult<DishResponse>.Ok(dish.ToResponse()));
+            ? NotFound(ApiResult<DishResponseV2>.Fail(new ProblemDetails { Title = $"Dish with guid {guid} not found" }))
+            : Ok(ApiResult<DishResponseV2>.Ok(dish.ToResponseV2()));
     }
 }

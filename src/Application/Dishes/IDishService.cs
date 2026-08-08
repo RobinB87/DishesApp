@@ -8,4 +8,5 @@ public interface IDishService
     Task<Dish> AddAsync(CreateDishRequest request);
     Task<IEnumerable<Dish>> GetAllAsync();
     Task<Dish?> GetByIdAsync(int id);
+    Task<Dish?> GetByGuidAsync(Guid guid);
 }

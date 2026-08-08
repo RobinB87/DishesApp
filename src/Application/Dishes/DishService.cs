@@ -50,4 +50,7 @@ public class DishService : IDishService
 
     public Task<Dish?> GetByIdAsync(int id) =>
         _dishRepository.GetByIdAsync(id);
+
+    public Task<Dish?> GetByGuidAsync(Guid guid) =>
+        _dishRepository.GetByGuidAsync(guid);
 }
