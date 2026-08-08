@@ -19,5 +19,8 @@ namespace Domain.Entities
             Country = country;
             Recipe = recipe;
         }
+
+        public bool HasSameData(string name, string country, string recipe) =>
+            Name == name && Country == country && Recipe == recipe;
     }
 }

@@ -18,8 +18,11 @@ public class DishService : IDishService
     public async Task<Dish> AddAsync(CreateDishRequest request)
     {
         var existingDish = await _dishRepository.GetByGuidAsync(request.Guid);
-        if (existingDish != null) 
-            return existingDish;
+        if (existingDish != null)
+            return existingDish.HasSameData(request.Name, request.Country, request.Recipe)
+                ? existingDish
+                : throw new InvalidOperationException(
+                    $"A dish with guid '{request.Guid}' already exists with different data.");
 
         var newIngredientNames = request.Ingredients.Select(i => i.IngredientName).ToList();
         var existingIngredients = await _ingredientRepository.GetByNamesAsync(newIngredientNames);
