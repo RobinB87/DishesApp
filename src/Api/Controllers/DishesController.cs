@@ -1,4 +1,5 @@
 ﻿using Api.Contracts;
+using Api.Filters;
 using Api.Mapping;
 using Application.Dishes;
 using FluentValidation;
@@ -9,6 +10,7 @@ namespace Api.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Obsolete("Deprecated. Use /api/v2/Dishes instead.")]
+[DeprecatedApi(Sunset = "Mon, 08 Feb 2027 00:00:00 GMT", SuccessorPath = "/api/v2/Dishes")]
 public class DishesController : ControllerBase
 {
     private readonly IDishService _dishService;
