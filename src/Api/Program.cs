@@ -22,4 +22,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+app.MapApiHealthChecks();
+
 app.Run();

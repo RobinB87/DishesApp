@@ -18,6 +18,9 @@ public static class DependencyInjection
         services.AddScoped<IDishRepository, DishRepository>();
         services.AddScoped<IIngredientRepository, IngredientRepository>();
 
+        services.AddHealthChecks()
+            .AddNpgSql(connectionString, name: "postgres", tags: ["ready"]);
+
         return services;
     }
 }

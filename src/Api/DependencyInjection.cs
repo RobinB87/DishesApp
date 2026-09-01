@@ -3,6 +3,7 @@ using Api.Contracts;
 using Api.Exceptions;
 using Api.Options;
 using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 public static class DependencyInjection
@@ -38,5 +39,20 @@ public static class DependencyInjection
             .MinimumLevel.Debug()
             .WriteTo.Console()
             .WriteTo.Seq(seqOptions.Url));
+    }
+
+    public static WebApplication MapApiHealthChecks(this WebApplication app)
+    {
+        app.MapHealthChecks("/health/live", new HealthCheckOptions
+        {
+            Predicate = _ => false
+        });
+
+        app.MapHealthChecks("/health/ready", new HealthCheckOptions
+        {
+            Predicate = check => check.Tags.Contains("ready")
+        });
+
+        return app;
     }
 }
