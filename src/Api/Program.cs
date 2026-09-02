@@ -1,9 +1,11 @@
+using Api.RateLimiting;
 using Application;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiLogging(builder.Configuration);
+builder.Services.AddRedisClient(builder.Configuration);
 
 builder.Services.AddApi();
 builder.Services.AddApplication();
@@ -19,6 +21,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRedisRateLimiting<FixedWindowRateLimiter>();
 
 app.MapControllers();
 
