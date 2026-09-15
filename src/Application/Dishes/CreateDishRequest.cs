@@ -31,7 +31,7 @@ public class CreateDishRequestValidator : AbstractValidator<CreateDishRequest>
 
         RuleFor(x => x.Recipe)
             .NotEmpty().WithMessage("Dish recipe is required.")
-            .MaximumLength(500).WithMessage("Dish recipe must not exceed 500 characters.");
+            .MaximumLength(5000).WithMessage("Dish recipe must not exceed 5000 characters.");
 
         RuleForEach(x => x.Ingredients).SetValidator(new CreateDishIngredientRequestValidator());
     }
